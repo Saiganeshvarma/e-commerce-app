@@ -1,0 +1,39 @@
+import { ecommerceApi } from './ecommerceApi';
+
+export const authApi = ecommerceApi.injectEndpoints({
+    endpoints: (builder) => ({
+        login: builder.mutation({
+            query: (credentials) => ({
+                url: '/auth/login',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        register: builder.mutation({
+            query: (userData) => ({
+                url: '/auth/register',
+                method: 'POST',
+                body: userData,
+            }),
+        }),
+        getProfile: builder.query({
+            query: () => '/auth/profile',
+            providesTags: ['User'],
+        }),
+        updateProfile: builder.mutation({
+            query: (data) => ({
+                url: '/auth/profile',
+                method: 'PUT',
+                body: data,
+            }),
+            invalidatesTags: ['User'],
+        }),
+    }),
+});
+
+export const {
+    useLoginMutation,
+    useRegisterMutation,
+    useGetProfileQuery,
+    useUpdateProfileMutation,
+} = authApi;
